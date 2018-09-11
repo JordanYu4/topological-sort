@@ -7,14 +7,14 @@
 require_relative 'graph'
 
 def install_order(arr)
-  vertices = Hash.new(true)
+  vertices = {}
   edges = []
   arr.each do |tup|
     pack_id, dependency = tup[0], tup[1]
-    from_vertex = Vertex.new(dependency) 
+    from_vertex = vertices[dependency] || Vertex.new(dependency) 
     to_vertex = Vertex.new(pack_id)
     edges << Edge.new(from_vertex, to_vertex)
-    Hash[to_vertex]
-    Hash[from_vertex] unless Hash[from_vertex]
+    vertices[pack_id] = to_vertex
+    vertices[dependency] = from_vertex
   end 
 end
